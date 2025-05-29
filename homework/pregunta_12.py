@@ -22,3 +22,9 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
+    import pandas as pd
+    tbl2 = pd.read_csv("files/input/tbl2.tsv", sep="\t")
+    tbl2['c5'] = tbl2.apply(lambda row: f"{row['c5a']}:{row['c5b']}", axis=1)  # Unir c5a y c5b con ':'
+    grouped = tbl2.groupby('c0')['c5'].apply(lambda x: ','.join(sorted(set(x))))  # Agrupar por c0 y unir los valores de c5 separados por ','
+    return grouped.reset_index()  # Renombrar la columna c5
+#print(pregunta_12())
